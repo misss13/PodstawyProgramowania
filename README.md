@@ -2,7 +2,7 @@
 #### Prowadzący Stanisław Polak
 
 [![N|Solid](http://home.agh.edu.pl/~mbargiel/img/c-programming.png)](http://www.iet.agh.edu.pl/pl/)
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+[![Działa](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](hhttps://github.com/misss13/PodstawyProgramowania)
 
 Poniżej prezentuje rozwiązania zadań z ćwiczeń.
 Całość pisana jest w C, większość programów sprawdzana jest valgrindem, do testów jednostkowych używam Cunit
