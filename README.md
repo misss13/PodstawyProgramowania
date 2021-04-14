@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 Poniżej prezentuje rozwiązania zadań z ćwiczeń.
-Całość pisana jest w C, większość programów sprawdzana jest valgrindem(bez folderu zadania 3) do testów jednostkowych używam Cunit
+Całość pisana jest w C, większość programów sprawdzana jest valgrindem, do testów jednostkowych używam Cunit
 
 - Bawie sie w tworzenie README.md
 - Jak mi się będzie chciało to wrzuce odp do kolejnych Zajęć
