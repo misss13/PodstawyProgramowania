@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
-void swap(int *arr, int a, int b){
+static inline void swap(int *arr, int a, int b){
   int temp = arr[a];
   arr[a] = arr[b];
   arr[b] = temp;
@@ -17,6 +18,18 @@ void print(int *arr, int n){
   printf("\n");
 }
 
+void sortowanie_przez_wybieranie(int* lista, int n){
+  int mini;
+  for(int i=0; i<n-1; i++){
+    mini=i;
+    for(int j=i+1; j<n; j++){
+      if(lista[j]<lista[mini])
+        mini=j;
+    }
+    swap(lista, mini, i);
+  }
+}
+/*
 void sortowanie_przez_wybieranie(int* lista, int n){
   int dozamiany=0;
   int maxim=lista[0];
@@ -32,7 +45,7 @@ void sortowanie_przez_wybieranie(int* lista, int n){
       swap(lista, dozamiany, i);
   }
 }
-
+*/
 int partition(int* tab, int p, int r){ //metoda Lomuto
   int x=tab[r];
   int i=p-1;
@@ -78,222 +91,73 @@ void heapsort(int *tab, int n){
   }
 }
 
-void funkcja()
-{
-  // Tu można coś wpisać
-  int i;
-  for (i=0; i<10000000; ++i)
-    {
-      int x = atoi("300");
-    }
-}
-
 int main(void){
   srand(time(NULL));
-  int tab[]={1,2,3,5,3,2,3,5,8,3,1,2,3};
-  heapsort(tab, 13);
-  //print(tab, 13);
-  /* int tab[] = {8, 5, 4, 5, 6, 0, 3, 2, 1};
-  int dlugosc =*(&tab + 1) - tab;
-  //sortowanie_przez_wybieranie(tab, dlugosc);
-  clock_t startClock = clock();
-  funkcja();
-  clock_t endClock = clock();
-  printf("%lf",(double) (endClock - startClock)/CLOCKS_PER_SEC);
-  startClock = clock();
-  funkcja();
-  endClock = clock();
-  printf("%lf",(double) (endClock - startClock)/CLOCKS_PER_SEC);
 
-  heapsort(tab, dlugosc);
-  
   //-----wczytywanie testu
-  int z,n,c;
+  char dane[50];
+  int z,n;
+  clock_t start, stop, wybieranie, quick, heap;
 
   scanf("%d", &z);
-  FOR(i,z){
-    scanf("%d %d",&n, &c);
-    int *tablica = (int *)malloc( n * sizeof(int));
-    FOR(j,n)
-      scanf("%d", &tablica[j]);
-    sortowanie_przez_wybieranie(tablica, n);
-    print(tablica, n);
-    free(tablica);
-  }
-  */
-  //------losowe_liczby
-  int N=10; //zestawow dla 100000 kilka s, sprawdzaj z 10000
-  int n, z, a;
-  clock_t start, stop, t_wstaw, t_szybkie, t_heap;
-  t_wstaw=0;
-  t_szybkie=0;
-  t_heap=0;
-  printf("%d\n",N);
-  FOR(i,N){
-    n=rand()%100+2; //liczb w tablicy
-    printf("%d 1\n",n);
-    int *tablica1 = (int *)malloc( n * sizeof(int));
-    int *tablica2 = (int *)malloc( n * sizeof(int));
-    int *tablica3 = (int *)malloc( n * sizeof(int));
-    FOR(j,n){
-      z=rand();
-      printf("%d", z);
-      tablica1[j]=z;
-      tablica2[j]=z;
-      tablica3[j]=z;
+   FOR(k,5){
+     wybieranie=0;
+     quick=0;
+     heap=0;
+     //scanf("%d", &z);
+    FOR(i,z){
+      scanf("%d",&n);
+      int *tablica = (int *)malloc( n * sizeof(int));
+      int *tablica1 = (int *)malloc( n * sizeof(int));
+      int *tablica2 = (int *)malloc( n * sizeof(int));
+
+      FOR(j,n){
+        scanf("%d", &tablica[j]);
+        tablica1[j]=tablica[j];
+        tablica2[j]=tablica[j];
+        //printf("%d\n", tablica[j]); //debug DLA MALYCH TESTOW
+      }
+      //wybieranie
+      start=clock();
+      sortowanie_przez_wybieranie(tablica, n);
+      stop=clock();
+      wybieranie+=stop-start;
+
+      //szybkie
+      start=clock();
+      quicksort(tablica1, 0, n-1);
+      stop=clock();
+      quick+=stop-start;
+
+      //heap
+      start=clock();
+      heapsort(tablica2, n);
+      stop=clock();
+      heap+=stop-start;
+
+      //print debug
+      //print(tablica, n);
+      //print(tablica1, n);
+      //print(tablica2, n);
+
+      //free
+      free(tablica);
+      free(tablica1);
+      free(tablica2);
     }
-    //wstaw
-    start=clock();
-    sortowanie_przez_wybieranie(tablica1, n);
-    stop=clock();
-    t_wstaw+=stop-start;
-    //szybkie
-    start=clock();
-    quicksort(tablica2, 0, n-1);
-    stop=clock();
-    t_szybkie+=stop-start;
-    //heap
-    start=clock();
-    quicksort(tablica3,0, n-1);
-    stop=clock();
-    t_heap+=stop-start;
-    //free
-    free(tablica1);
-    free(tablica2);
-    free(tablica3);
-  }/*
-  printf("Sortowanie: wybieranie\t losowe dane\t %lf\n", (double)(t_wstaw)/CLOCKS_PER_SEC);
-  printf("Sortowanie: szybkie   \t losowe dane\t %lf\n", (double)(t_szybkie)/CLOCKS_PER_SEC);
-  printf("Sortowanie: kopcowanie\t losowe dane\t %lf\n", (double)(t_heap)/CLOCKS_PER_SEC);
+    if(k==0)
+      strcpy(dane, "losowe");
+    if(k==1)
+      strcpy(dane, "pr rosn");
+    if(k==2)
+      strcpy(dane, "rosnace");
+    if(k==3)
+      strcpy(dane, "pr male");
+    if(k==4)
+      strcpy(dane,"malejace");
 
-  //-------prawie posortowane malejaco
-  t_wstaw=0;
-  t_szybkie=0;
-  t_heap=0;
-  z=0;
-  FOR(i,N){
-    n=rand()%10+2; //liczb w tablicy
-    int *tablica1 = (int *)malloc( n * sizeof(int));
-    int *tablica2 = (int *)malloc( n * sizeof(int));
-    int *tablica3 = (int *)malloc( n * sizeof(int));
-    FOR(j,n){
-      z+=rand()%500;
-      tablica1[j]=z;
-      tablica2[j]=z;
-      tablica3[j]=z;
-    }
-    //prawie bo zamieniam 2 el miejscami
-    swap(tablica1, 0, n/2);
-    swap(tablica2, 0, n/2);
-    swap(tablica3, 0, n/2);
-    z=(n-1);
-    //wstaw
-    start=clock();
-    sortowanie_przez_wybieranie(tablica1, n);
-    stop=clock();
-    t_wstaw+=stop-start;
-    //szybkie
-    start=clock();
-    quicksort(tablica2, 0, z);
-    stop=clock();
-    t_szybkie+=stop-start;
-    //heap
-    start=clock();
-    heapsort(tablica3, n);
-    stop=clock();
-    t_heap+=stop-start;
-    //free
-    free(tablica1);
-    free(tablica2);
-    free(tablica3);
-
+    printf("Sortowanie: wybieranie\t %s dane\t %lf\n",dane, (double)(wybieranie)/CLOCKS_PER_SEC);
+    printf("Sortowanie: szybkie   \t %s dane\t %lf\n",dane, (double)(quick)/CLOCKS_PER_SEC);
+    printf("Sortowanie: kopcowanie\t %s dane\t %lf\n",dane, (double)(heap)/CLOCKS_PER_SEC);
   }
-    printf("Sortowanie: wybieranie\t losowe pr pos rosnaco\t %lf\n", (double)(t_wstaw)/CLOCKS_PER_SEC);
-    printf("Sortowanie: szybkie   \t losowe pr pos rosnaco\t %lf\n", (double)(t_szybkie)/CLOCKS_PER_SEC);
-    printf("Sortowanie: kopcowanie\t losowe pr pos rosnaco\t %lf\n", (double)(t_heap)/CLOCKS_PER_SEC);
-
-//-------posortowane rosnaco
-  t_wstaw=0;
-  t_szybkie=0;
-  t_heap=0;
-  z=0;
-  FOR(i,N){
-    n=rand()%10+2; //liczb w tablicy
-    int *tablica1 = (int *)malloc( n * sizeof(int));
-    int *tablica2 = (int *)malloc( n * sizeof(int));
-    int *tablica3 = (int *)malloc( n * sizeof(int));
-    FOR(j,n){
-      z+=rand()%500;
-      z%=1000000;
-      tablica1[j]=z;
-      tablica2[j]=z;
-      tablica3[j]=z;
-    }
-    //wstaw
-    start=clock();
-    sortowanie_przez_wybieranie(tablica1, n);
-    stop=clock();
-    t_wstaw+=stop-start;
-    //szybkie
-    start=clock();
-    quicksort(tablica2, 0, n-1);
-    stop=clock();
-    t_szybkie+=stop-start;
-    //heap
-    start=clock();
-    heapsort(tablica3, n);
-    stop=clock();
-    t_heap+=stop-start;
-    //free
-    free(tablica1);
-    free(tablica2);
-    free(tablica3);
-
-  }
-    printf("Sortowanie: wybieranie\t losowe pos rosnaco\t %lf\n", (double)(t_wstaw)/CLOCKS_PER_SEC);
-    printf("Sortowanie: szybkie   \t losowe pos rosnaco\t %lf\n", (double)(t_szybkie)/CLOCKS_PER_SEC);
-    printf("Sortowanie: kopcowanie\t losowe pos rosnaco\t %lf\n", (double)(t_heap)/CLOCKS_PER_SEC);
-//-------prawie posortowane malejaco
-  t_wstaw=0;
-  t_szybkie=0;
-  t_heap=0;
-  z=500000+rand();
-  FOR(i,N){
-    n=rand()%10+2; //liczb w tablicy
-    int *tablica1 = (int *)malloc( n * sizeof(int));
-    int *tablica2 = (int *)malloc( n * sizeof(int));
-    int *tablica3 = (int *)malloc( n * sizeof(int));
-    FOR(j,n){
-      z-=rand()%500;
-      tablica1[j]=z;
-      tablica2[j]=z;
-      tablica3[j]=z;
-    }
-    //prawie bo zamieniam 2 el miejscami
-   
-    //wstaw
-    start=clock();
-    sortowanie_przez_wybieranie(tablica1, n);
-    stop=clock();
-    t_wstaw+=stop-start;
-    //szybkie
-    start=clock();
-    quicksort(tablica2, 0, n-1);
-    stop=clock();
-    t_szybkie+=stop-start;
-    //heap
-    start=clock();
-    heapsort(tablica3, n);
-    stop=clock();
-    t_heap+=stop-start;
-    //free
-    free(tablica1);
-    free(tablica2);
-    free(tablica3);
-
-  }
-    printf("Sortowanie: wybieranie\t losowe pr pos malejaco\t %lf\n", (double)(t_wstaw)/CLOCKS_PER_SEC);
-    printf("Sortowanie: szybkie   \t losowe pr pos malejaco\t %lf\n", (double)(t_szybkie)/CLOCKS_PER_SEC);
-    printf("Sortowanie: kopcowanie\t losowe pr pos malejaco\t %lf\n", (double)(t_heap)/CLOCKS_PER_SEC);
-   */
 }

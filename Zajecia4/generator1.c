@@ -20,13 +20,13 @@ void print(int *arr, int n){
 
 int main(void){
   srand(time(NULL));
-  int N=100; //zestawow dla 100000 kilka s, sprawdzaj z 10000
+  int N=100000; //zestawow dla 100000 kilka s, sprawdzaj z 10000
   int n, z;
-  int a=100; //liczba elementow tablicy
+  int a=500; //liczba elementow tablicy
   int b=500; //liczby nie wieksze niz 500
 
   //--------liczby losowe
-  printf("%d\n",N*5);
+  printf("%d\n",N);
   FOR(i,N){
     n=rand()%a+2; //liczb w tablicy
     printf("%d\n",n);
