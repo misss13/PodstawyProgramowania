@@ -29,7 +29,7 @@ void Term__destroy(Term* term){
 
 char* Term__toString(Term* term){
   char *str=malloc(20*sizeof(char));
-  snprintf(str, sizeof(str)*5, "%d:%d [%d]", term->hour, term->minute, term->duration);
+  snprintf(str, sizeof(str)*5, "%02d:%02d [%d]", term->hour, term->minute, term->duration);
   return str;
 }
 
