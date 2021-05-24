@@ -1,4 +1,0 @@
-//sprintf(godzina, "%d", term->hour);
-//sprintf(minuta, "%d", term->minute);
-//sprintf(trwanie, "%d", term->duration);
-//tak uzywaj zamiast atoi
