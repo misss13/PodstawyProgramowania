@@ -1,0 +1,10 @@
+./zadanie2.3 \
+--add 'Podstawy programowania, Środa 12:50 [90]' \
+--add 'Wychowanie fizyczne, Poniedziałek 8:00 [90]' \
+--add 'Język angielski, Poniedziałek 8:00 [90]'
+
+./zadanie2.3 \
+--add 'Podstawy programowania, Środa 12:50 [90]' \
+--add 'Wychowanie fizyczne, Poniedziałek 8:00 [90]' \
+--remove 'Podstawy programowania, Środa 12:50 [90]' \
+--remove 'Podstawy programowania, Poniedziałek 8:00 [90]'

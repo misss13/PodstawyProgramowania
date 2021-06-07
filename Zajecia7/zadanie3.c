@@ -53,7 +53,7 @@ void Queue__enqueue(Queue *queue, Element element){
     if(queue->coun<queue->size)
       queue->element=realloc(queue->element, sizeof(int)*(dynamic+1));
   }
-}
+}//1 |2 | | | | | | |max
 
 Queue *Queue__create(int size){
   Queue* kol=malloc(sizeof(Queue));
