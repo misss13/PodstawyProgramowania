@@ -12,5 +12,5 @@ Całość pisana jest w C, większość programów sprawdzana jest valgrindem, d
 - ✨  Moje odpowiedzi  nie posiadają memoryleaków ✨  
 ## Features
 - Rozwiązania zadań ze strony https://polak.icsr.agh.edu.pl/
-- miałam prawie full punktów
-- polecam spacemacs :b
+- miałam 41.1/42 punkty
+- polecam spacemacs
